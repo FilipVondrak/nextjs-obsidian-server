@@ -1,31 +1,28 @@
-import {hidden} from "next/dist/lib/picocolors";
 import FileTree from "@/components/FileTree";
-import NoteSearch from "@/components/NoteSearch";
+import NoteSearch from "@/components/NoteSearch"
 
 export default function NotesLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <div className={"flex flex-col grow"}>
-            <div className={"hidden"}>
-                <ul className={"flex gap-4 flex-row bg-primary border-b-1 border-secondary"}>
-                    <li>text</li>
-                </ul>
+        <div className="grid grid-cols-[minmax(200,1fr)_3fr_minmax(200,1fr)] grid-rows-[auto_1fr] grow">
+            <div className="row-auto col-span-3 bg-primary border-b-1 border-secondary hidden h-[2rem]">
+
             </div>
 
-            <div className={"flex flex-col-reverse md:flex-row gap-4 grow"}>
-                <aside className={"md:w-1/4 xl:w-1/6 bg-primary border-t-1 md:border-0 md:border-r-1 border-secondary"}>
-                    <NoteSearch/>
-                    <hr className={"text-secondary"}/>
-                    <FileTree/>
-                </aside>
-                <div className={"grow flex justify-center"}>
-                    <div className={"max-w-[500] overflow-scroll"}>
-                        { children }
-                    </div>
-                </div>
-                <aside className={"md:w-1/4 xl:w-1/6 bg-primary border-b-1 md:border-0 md:border-l-1 border-secondary"}>
-                    <h1>Sidebar</h1>
-                </aside>
+            <aside className={"row-start-2 bg-primary border-r-1 border-secondary"}>
+                <NoteSearch/>
+                <hr className={"text-secondary"}/>
+                <FileTree/>
+            </aside>
+
+            <div className={"row-start-2 flex"}>
+                <main className={"row-start-2 max-h-screen overflow-y-auto p-4"}>
+                    {children}
+                </main>
             </div>
+
+            <aside className={"row-start-2 bg-primary border-l-1 border-secondary flex-col"}>
+                <h1 className={"text-center text-2xl font-bold"}>Sidebar</h1>
+            </aside>
         </div>
     )
 }
