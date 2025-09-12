@@ -16,7 +16,7 @@ const treeData: TreeNode = await generateFolderStructure("maturita");
 
 export default function FileTree() {
     return (
-        <ul className={"flex flex-col text-text p-2 gap-1"}>
+        <ul className={"flex flex-col text-text p-2 gap-1 h-full overflow-y-scroll"}>
             {
                 treeData.children?.map((child, idx) => (
                     <TreeItem key={idx} node={child} />
