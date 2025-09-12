@@ -22,20 +22,20 @@ export default function FolderNode({ node }: {node: TreeNode}) {
             </div>
 
             {/* child items */}
-            <div className={"flex justify-end gap-2"}>
-                <ul className={"center w-[98%] border-l-1 border-text pl-2 mb-2"}>
-                    {
-                        !isEmpty && isOpen &&
-                        <>
+            {
+            !isEmpty && isOpen &&
+            <div className={"flex justify-end"}>
+                <ul className={"center w-[98%] border-l-1 border-text pl-2 gap-2 flex flex-col"}>
+                    <>
                         {
                             node.children?.map((node: TreeNode, index: number) => (
                                 <TreeItem node={node} key={index}/>
                             ))
                         }
-                        </>
-                    }
+                    </>
                 </ul>
             </div>
+            }
         </div>
     )
 }
