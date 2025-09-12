@@ -3,6 +3,7 @@ import { FolderOpen, FolderClosed, FolderXIcon } from "lucide-react"
 import {useState} from "react";
 import { TreeNode } from "@/components/FileTree"
 import TreeItem from "@/components/TreeItem";
+import Link from "next/link";
 
 
 export default function FolderNode({ node }: {node: TreeNode}) {
@@ -12,19 +13,19 @@ export default function FolderNode({ node }: {node: TreeNode}) {
     return (
         <div className={"flex flex-col gap-2"}>
             {/* icon and folder name */}
-            <div className={"flex flex-row gap-2 cursor-pointer w-fit"} onClick={() => setOpen(!isOpen)}>
+            <div className={"flex flex-row gap-2 hover:bg-secondary rounded-r-2xl select-none"} onClick={() => setOpen(!isOpen)}>
                 {
                     isEmpty ? <FolderXIcon /> :
                         isOpen ? <FolderOpen/> : <FolderClosed />
                 }
-                <p>{node.name}</p>
+                <p className={"select-none"}>{node.name}</p>
             </div>
 
             {/* child items */}
-            <div className={"flex justify-end"}>
-                <ul className={"center w-[98%] border-l-1 border-text pl-2"}>
+            <div className={"flex justify-end gap-2"}>
+                <ul className={"center w-[98%] border-l-1 border-text pl-2 mb-2"}>
                     {
-                        !isEmpty &&
+                        !isEmpty && isOpen &&
                         <>
                         {
                             node.children?.map((node: TreeNode, index: number) => (
