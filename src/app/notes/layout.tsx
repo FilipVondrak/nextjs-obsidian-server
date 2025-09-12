@@ -3,7 +3,7 @@ import NoteSearch from "@/components/NoteSearch"
 
 export default function NotesLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <div className="grid grid-cols-[minmax(200,1fr)_3fr_minmax(200,1fr)] grid-rows-[auto_1fr] grow">
+        <div className="grid h-full w-full grid-cols-[minmax(200px,1fr)_3fr_minmax(200px,1fr)] grid-rows-[auto_1fr]">
             <div className="row-auto col-span-3 bg-primary border-b-1 border-secondary hidden h-[2rem]">
 
             </div>
@@ -14,9 +14,9 @@ export default function NotesLayout({children,}: Readonly<{ children: React.Reac
                 <FileTree/>
             </aside>
 
-            <div className={"row-start-2 flex"}>
-                <main className={"row-start-2 max-h-screen overflow-y-auto p-4"}>
-                    {children}
+            <div className="row-start-2 flex h-full overflow-y-auto">
+                <main className=" p-4">
+                    { children }
                 </main>
             </div>
 

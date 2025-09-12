@@ -26,12 +26,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
+    <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <div className={"flex flex-col h-screen w-screen overflow-hidden"}>
-            <Header/>
-            <div className={"grow flex"}>
+    >
+        <div className={"grid grid-rows-[4rem_1fr] h-screen"}>
+            <Header />
+            <div className={"row-start-2 overflow-y-hidden text-black h-full flex items-center justify-center"}>
                 {children}
             </div>
         </div>
