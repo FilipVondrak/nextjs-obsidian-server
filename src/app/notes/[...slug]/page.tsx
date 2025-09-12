@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
   }
 
   return (
-      <article>
+      <article className={"h-full w-full text-text"}>
           <div>Post path: {path}</div>
           <div>Post data: {noteData.title}</div>
           <br />
