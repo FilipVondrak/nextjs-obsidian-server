@@ -92,6 +92,7 @@ export async function getPostData(id: any) {
 
 type TreeNode = {
   name: string;
+  path: string;
   type: "file" | "folder";
   children?: TreeNode[];
 };
@@ -103,19 +104,22 @@ async function readFolderContents(folderPath: string, rootNode: TreeNode) {
     for (let filename of fileNames) {
             let stats: Stats = await fsp.stat(path.join(basePath, filename));
 
+            let fpath = '/notes/' + [rootNode.path, filename].join('/');
+
             if(stats.isDirectory()) {
-                rootNode.children?.push({name: filename, type: "folder", children: []});
+                rootNode.children?.push({name: filename, type: "folder", children: [], path: fpath});
                 await readFolderContents(path.join(folderPath, filename), rootNode.children![rootNode.children!.length-1]);
             }
 
             else {
-                rootNode.children?.push({name: filename, type: "file", children: []});
+                fpath = fpath.slice(0,-3);
+                rootNode.children?.push({name: filename, type: "file", children: [], path: fpath});
             }
     }
 }
 
 export async function generateFolderStructure(folderPath: string) {
-    let rootNode: TreeNode = {name: folderPath, type: "folder", children: []};
+    let rootNode: TreeNode = {name: folderPath, type: "folder", children: [], path: folderPath};
     await readFolderContents(folderPath, rootNode);
     return rootNode;
 }
