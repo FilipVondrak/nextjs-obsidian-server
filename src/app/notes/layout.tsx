@@ -8,15 +8,17 @@ export default function NotesLayout({children,}: Readonly<{ children: React.Reac
 
             </div>
 
-            <aside className={"row-start-2 bg-primary border-r-1 border-secondary"}>
+            <aside className={"row-start-2 bg-primary border-r-1 border-secondary flex flex-col"}>
                 <NoteSearch/>
                 <hr className={"text-secondary"}/>
                 <FileTree/>
             </aside>
 
-            <div className="row-start-2 flex h-full overflow-y-auto">
-                <main className=" p-4">
-                    { children }
+            <div className="row-start-2 flex h-full w-full overflow-y-auto">
+                <main className="flex h-full w-full justify-center p-4">
+                    <div className="w-[800px]">
+                        { children }
+                    </div>
                 </main>
             </div>
 
