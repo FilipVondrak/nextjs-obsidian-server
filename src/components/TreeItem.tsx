@@ -1,3 +1,4 @@
+'use client'
 import FolderNode from "@/components/FolderNode";
 import {FileText} from "lucide-react";
 import Link from "next/link";
@@ -13,10 +14,10 @@ export default function TreeItem({ node }: { node: TreeNode }) {
             {isFolder ?
                 <FolderNode node={node}/>
                 :
-                <div className={"flex flex-row items-center justify-start gap-2"}>
+                <Link href={node.path} className={"flex flex-row items-center justify-start gap-2 cursor-default hover:bg-secondary rounded-r-2xl"}>
                     <FileText/>
-                    <p><Link href={node.path}>{node.name}</Link></p>
-                </div>
+                    <p>{node.name}</p>
+                </Link>
             }
         </li>
     )
