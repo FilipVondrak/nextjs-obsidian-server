@@ -12,7 +12,7 @@ export default function Header() {
     return (
         <>
             <header className={"flex justify-between items-center p-4 bg-primary border-b-1 border-secondary overflow-clip"}>
-                <h1 className={"text-3xl text-text font-bold"}><Link href={"/public"}>{SITE_CONFIG.name}</Link></h1>
+                <h1 className={"text-3xl text-text font-bold"}><Link href={"/"}>{SITE_CONFIG.name}</Link></h1>
                 <ul className={"flex gap-4 rounded-full bg-background p-2 ring-2 ring-secondary hidden"}>
                     {
                         Links.map((link) => (
