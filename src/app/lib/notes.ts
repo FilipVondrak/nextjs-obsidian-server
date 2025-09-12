@@ -104,10 +104,11 @@ async function readFolderContents(folderPath: string, rootNode: TreeNode) {
     for (let filename of fileNames) {
             let stats: Stats = await fsp.stat(path.join(basePath, filename));
 
-            let fpath = '/notes/' + [rootNode.path, filename].join('/');
+            let fpath = [rootNode.path, filename].join('/');
 
             if(stats.isDirectory()) {
                 rootNode.children?.push({name: filename, type: "folder", children: [], path: fpath});
+
                 await readFolderContents(path.join(folderPath, filename), rootNode.children![rootNode.children!.length-1]);
             }
 
@@ -119,7 +120,7 @@ async function readFolderContents(folderPath: string, rootNode: TreeNode) {
 }
 
 export async function generateFolderStructure(folderPath: string) {
-    let rootNode: TreeNode = {name: folderPath, type: "folder", children: [], path: folderPath};
+    let rootNode: TreeNode = {name: folderPath, type: "folder", children: [], path: '/notes/' + folderPath};
     await readFolderContents(folderPath, rootNode);
     return rootNode;
 }
