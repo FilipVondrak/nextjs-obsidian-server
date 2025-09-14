@@ -2,11 +2,7 @@ import fs from 'fs';
 import * as fsp from 'fs/promises';
 import path from 'path';
 import matter from 'gray-matter';
-import { remark } from 'remark';
-import html from 'remark-html';
 import {Stats} from "node:fs";
-import {resolveAppleWebApp} from "next/dist/lib/metadata/resolvers/resolve-basics";
-import {base} from "next/dist/build/webpack/config/blocks/base";
 
 const notesDirectory = path.join(process.cwd(), 'obsidian-vaults/notes');
 
@@ -38,35 +34,6 @@ export function getSortedPostsData() {
       return -1;
     }
   });
-}
-
-export function getAllPostIds() {
-    /*
-  const fileNames = fs.readdirSync(notesDirectory);
-
-  // Returns an array that looks like this:
-  // [
-  //   {
-  //     params: {
-  //       id: 'ssg-ssr'
-  //     }
-  //   },
-  //   {
-  //     params: {
-  //       id: 'pre-rendering'
-  //     }
-  //   }
-  // ]
-  return fileNames.map((fileName) => {
-    return {
-      params: {
-        id: fileName.replace(/\.md$/, ''),
-      },
-    };
-  });
-
-     */
-    return [ { params: { id: 'pre-rendering' } }, { params: { id: 'ssg-ssr' } } ]
 }
 
 export async function getPostData(id: any) {
@@ -102,9 +69,29 @@ type TreeNode = {
   children?: TreeNode[];
 };
 
+function sortFolderNodeChildren(nodes: TreeNode[]):TreeNode[] {
+    if(nodes.length < 2) {
+        return nodes;
+    }
+
+    // 1. Separate children into folders and files
+    const folders = nodes.filter((child: TreeNode) => child.type === "folder");
+    const files = nodes.filter((child: TreeNode) => child.type === "file");
+
+    // 2. Sort both arrays alphabetically by the 'name' property
+    folders.sort((a, b) => a.name.localeCompare(b.name));
+    files.sort((a, b) => a.name.localeCompare(b.name));
+
+    // 3. (Optional) Combine them back and update the original node
+    // This will place all sorted folders before all sorted files.
+    return [...folders, ...files];
+}
+
 async function readFolderContents(folderPath: string, rootNode: TreeNode) {
     let basePath: string = path.join(notesDirectory, folderPath);
     let fileNames: string[] = await fsp.readdir(basePath);
+
+    const children:TreeNode[] = [];
 
     for (let filename of fileNames) {
             let stats: Stats = await fsp.stat(path.join(basePath, filename));
@@ -112,20 +99,24 @@ async function readFolderContents(folderPath: string, rootNode: TreeNode) {
             let fpath = [rootNode.path, filename].join('/');
 
             if(stats.isDirectory()) {
-                rootNode.children?.push({name: filename, type: "folder", children: [], path: fpath});
+                children.push({name: filename, type: "folder", children: [], path: fpath});
+                const currentNode = children[children.length-1];
 
-                await readFolderContents(path.join(folderPath, filename), rootNode.children![rootNode.children!.length-1]);
+                currentNode.children = sortFolderNodeChildren(
+                    await readFolderContents(path.join(folderPath, filename), currentNode)
+                );
             }
 
             else {
                 fpath = fpath.slice(0,-3);
-                rootNode.children?.push({name: filename, type: "file", children: [], path: fpath});
+                children.push({name: filename, type: "file", children: [], path: fpath});
             }
     }
+    return children;
 }
 
 export async function generateFolderStructure(folderPath: string) {
     let rootNode: TreeNode = {name: folderPath, type: "folder", children: [], path: '/notes/' + folderPath};
-    await readFolderContents(folderPath, rootNode);
+    rootNode.children = sortFolderNodeChildren(await readFolderContents(folderPath, rootNode));
     return rootNode;
 }
