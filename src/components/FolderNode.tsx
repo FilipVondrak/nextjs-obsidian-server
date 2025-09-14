@@ -25,7 +25,7 @@ export default function FolderNode({ node }: {node: TreeNode}) {
             {
             !isEmpty && isOpen &&
             <div className={"flex justify-end"}>
-                <ul className={"center w-[98%] border-l-1 border-text pl-2 gap-2 flex flex-col"}>
+                <ul className={"center w-[98%] border-l-1 border-text/20 pl-2 gap-2 flex flex-col"}>
                     <>
                         {
                             node.children?.map((node: TreeNode, index: number) => (

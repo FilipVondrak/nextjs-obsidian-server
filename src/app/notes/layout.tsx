@@ -3,7 +3,7 @@ import NoteSearch from "@/components/NoteSearch"
 
 export default function NotesLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <div className="grid h-full w-full grid-cols-[minmax(200px,1fr)_3fr_minmax(200px,1fr)] grid-rows-[auto_1fr] ">
+        <div className="grid h-full w-full grid-cols-[minmax(200px,1fr)_3fr_minmax(200px,1fr)] grid-rows-[auto_1fr] overflow-hidden">
             <div className="row-auto col-span-3 bg-primary border-b-1 border-secondary hidden h-[2rem]">
 
             </div>

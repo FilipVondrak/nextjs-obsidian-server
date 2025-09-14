@@ -26,6 +26,7 @@
 
 /* Default styling */
 body {
+    color-scheme: dark;
     background: var(--color-background);
     color: var(--color-text);
     font-family: Arial, Helvetica, sans-serif;
