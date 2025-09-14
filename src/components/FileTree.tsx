@@ -14,9 +14,7 @@ export type TreeNode = {
   children?: TreeNode[];
 };
 
-
-
-
+export const FolderSize:string = "1rem";
 
 export default function FileTree() {
     const pathName = usePathname();

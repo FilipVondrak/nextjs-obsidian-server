@@ -1,23 +1,25 @@
 'use client'
 import { FolderOpen, FolderClosed, FolderXIcon } from "lucide-react"
 import {useState} from "react";
-import { TreeNode } from "@/components/FileTree"
+import { TreeNode, FolderSize } from "@/components/FileTree"
 import TreeItem from "@/components/TreeItem";
 import Link from "next/link";
 
 
 export default function FolderNode({ node }: {node: TreeNode}) {
-    const [isOpen, setOpen] = useState(true);
+    const [isOpen, setOpen] = useState(false);
     const isEmpty = node.children?.length === 0;
 
     return (
         <div className={"flex flex-col gap-2"}>
             {/* icon and folder name */}
-            <div className={"flex flex-row gap-2 hover:bg-secondary rounded-r-2xl select-none"} onClick={() => setOpen(!isOpen)}>
-                {
-                    isEmpty ? <FolderXIcon /> :
-                        isOpen ? <FolderOpen/> : <FolderClosed />
-                }
+            <div className={"flex flex-row gap-2 hover:bg-secondary rounded-r-2xl select-none pl-1"} onClick={() => setOpen(!isOpen)}>
+                <div className={"flex justify-center items-center"}>
+                    {
+                        isEmpty ? <FolderXIcon size={FolderSize}/> :
+                            isOpen ? <FolderOpen size={FolderSize}/> : <FolderClosed size={FolderSize}/>
+                    }
+                </div>
                 <p className={"select-none"}>{node.name}</p>
             </div>
 
