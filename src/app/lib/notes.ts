@@ -72,6 +72,7 @@ export function getAllPostIds() {
 export async function getPostData(id: any) {
   const fullPath = path.join(notesDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
+  let fileName: string = fullPath.substring(fullPath.lastIndexOf('/') + 1);
 
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
@@ -88,6 +89,7 @@ export async function getPostData(id: any) {
     // Combine the data with the id
   return {
       id,
+      fileName,
       contentHtml,
     ...matterResult.data,
   };

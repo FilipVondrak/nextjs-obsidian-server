@@ -26,10 +26,19 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
 
   return (
       <article className={"h-full w-full text-text"}>
-
-          <div>Post path: {path}</div>
-          <div>Post data: {noteData.title}</div>
+          <div className={"flex flex-col gap-2"}>
+              {
+                  // displays either the title if set otherwise the file name
+                  noteData.title ?
+                      <>
+                          <h1 className={"text-center text-accent font-bold text-4xl"}>{noteData.title}</h1>
+                          <p className={"italic text-center text-sm"}>{noteData.fileName}</p>
+                      </> : <h1 className={"text-center text-accent font-bold text-4xl"}>{noteData.fileName}</h1>
+              }
+              <hr className={"text-secondary"}/>
+          </div>
           <br />
+
           {
               <div className={"prose dark:prose-invert max-w-none prose-blue prose-headings:underline text-text"}>
                   <Markdown remarkPlugins={[remarkGfm]}>
