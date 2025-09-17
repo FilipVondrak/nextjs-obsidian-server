@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
 
   let noteData: any;
   try {
-    noteData = await getPostData(path);
+    noteData = await getPostData(decodeURI(path));
   } catch (err) {
     // File not found or fs error
     return notFound();
