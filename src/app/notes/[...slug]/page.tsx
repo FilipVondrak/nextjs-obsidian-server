@@ -4,6 +4,7 @@ import Markdown from 'react-markdown'
 import remarkGfm from "remark-gfm";
 //import 'github-markdown-css'
 import "./note-style.css"
+import rehypeHighlight from "rehype-highlight";
 
 export async function generateStaticParams() {
     return [
@@ -41,7 +42,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
 
           {
               <div className={"prose dark:prose-invert max-w-none prose-blue prose-headings:underline text-text"}>
-                  <Markdown remarkPlugins={[remarkGfm]}>
+                  <Markdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight]}
+                  >
                       { noteData.contentHtml}
                   </Markdown>
               </div>

@@ -1,6 +1,8 @@
 import FileTree from "@/components/FileTree";
 import NoteSearch from "@/components/NoteSearch"
 
+import 'highlight.js/styles/github-dark.css';
+
 export default function NotesLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
         <div className="grid h-full w-full grid-cols-[minmax(200px,1fr)_3fr_minmax(200px,1fr)] grid-rows-[auto_1fr] overflow-hidden">
