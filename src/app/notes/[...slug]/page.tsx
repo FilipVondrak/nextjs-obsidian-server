@@ -5,6 +5,8 @@ import remarkGfm from "remark-gfm";
 //import 'github-markdown-css'
 import "./note-style.css"
 import rehypeHighlight from "rehype-highlight";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 
 export async function generateStaticParams() {
     return [
@@ -41,10 +43,10 @@ export default async function Page({ params }: { params: Promise<{ slug: string[
           <br />
 
           {
-              <div className={"prose dark:prose-invert max-w-none prose-blue prose-headings:underline text-text"}>
+              <div className={"prose dark:prose-invert max-w-none prose-blue prose-headings:underline text-text pb-5"}>
                   <Markdown
-                      remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeHighlight]}
+                      remarkPlugins={[remarkGfm, remarkMath]}
+                      rehypePlugins={[rehypeHighlight, rehypeKatex]}
                   >
                       { noteData.contentHtml}
                   </Markdown>

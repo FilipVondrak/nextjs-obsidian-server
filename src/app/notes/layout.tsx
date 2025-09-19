@@ -1,11 +1,15 @@
 import FileTree from "@/components/FileTree";
 import NoteSearch from "@/components/NoteSearch"
 
+// styles for code highlight
 import 'highlight.js/styles/github-dark.css';
+
+// styles for latex math expressions
+import 'katex/dist/katex.min.css';
 
 export default function NotesLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
     return (
-        <div className="grid h-full w-full grid-cols-[minmax(200px,1fr)_3fr_minmax(200px,1fr)] grid-rows-[auto_1fr] overflow-hidden">
+        <div className="flex flex-col md:grid h-full w-full grid-cols-[minmax(200px,1fr)_3fr_minmax(200px,1fr)] grid-rows-[auto_1fr] overflow-hidden">
             <div className="row-auto col-span-3 bg-primary border-b-1 border-secondary hidden h-[2rem]">
 
             </div>
@@ -18,7 +22,7 @@ export default function NotesLayout({children,}: Readonly<{ children: React.Reac
                 </div>
             </aside>
 
-            <div className="row-start-2 flex h-full w-full overflow-y-auto">
+            <div className="row-start-2 flex md:h-full w-full md:overflow-y-auto">
                 <main className="flex h-full w-full justify-center p-4">
                     <div className="h-full w-full max-w-[800px]">
                         { children }
